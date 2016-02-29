@@ -249,7 +249,7 @@ $.init.add(next => {
   }
 
   // 其他代理
-  rootRouter.get((req, res, next) => {
+  rootRouter.get('/', (req, res, next) => {
     $.logger.log('proxy %s %s', req.method, req.url);
     proxy.web(req, res, {target: $.config.get('npm.url')});
   });
