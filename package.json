@@ -1,0 +1,39 @@
+{
+  "name": "private-npm-registry",
+  "version": "0.0.1",
+  "description": "simple private NPM registry server",
+  "main": "server.js",
+  "dependencies": {
+    "async": "^1.5.2",
+    "body-parser": "^1.15.0",
+    "debug": "^2.2.0",
+    "express": "^4.13.4",
+    "fs-extra": "^0.26.5",
+    "lei-utils": "^2.0.5",
+    "http-proxy": "^1.13.2",
+    "project-core": "^0.0.14",
+    "request": "^2.69.0",
+    "super-cache": "^0.0.13",
+    "tracer": "^0.8.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leizongmin/private-npm-registry.git"
+  },
+  "keywords": [
+    "npm",
+    "registry",
+    "cnpm"
+  ],
+  "author": "Zongmin Lei <leizongmin@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/leizongmin/private-npm-registry/issues"
+  },
+  "homepage": "https://github.com/leizongmin/private-npm-registry#readme"
+}
