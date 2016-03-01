@@ -209,7 +209,7 @@ $.init.add(next => {
 
   // tgz files
   rootRouter.get('/@*/:scope/:name.tgz', checkUserAuthorization, (req, res, next) => {
-    const name = '@' + req.params.scope + '/' + req.name + '.tgz';
+    const name = req.params.scope + '/' + req.params.name + '.tgz';
     $.logger.log('get package tgz file: %s', name);
     const file = path.resolve($.config.get('npm.path.data'), name);
     res.sendFile(file);
@@ -249,7 +249,7 @@ $.init.add(next => {
   }
 
   // 其他代理
-  rootRouter.get('/', (req, res, next) => {
+  rootRouter.get((req, res, next) => {
     $.logger.log('proxy %s %s', req.method, req.url);
     proxy.web(req, res, {target: $.config.get('npm.url')});
   });
