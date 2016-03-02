@@ -16,16 +16,13 @@ module.exports = function (done) {
   $.data.set('middleware.body', bodyParser.json());
 
   function checkUserAuthorization(req, res, next) {
-    if (!req.headers.authorization) return res.json({error: 'not_login'});
-    const s = req.headers.authorization.replace(/^Bearer /i, '').split('@');
-    const name = s[0];
-    const password = s[1];
-    if (!$.config.has('npm.user.' + name)) return res.json({error: 'error', reason: 'user_not_exists'});
-    if (!$.utils.validatePassword($.config.get('npm.user.' + name + '.password'), password)) {
-      return res.json({error: 'error', reason: 'invalid_password'});
-    }
-    req.npmUser = name;
-    next();
+    if (!req.headers.authorization) return res.json($.utils.npmError('please login'));
+    const token = req.headers.authorization.replace(/^Bearer /i, '');
+    $.method('user.decryptLoginToken').call({token: token}, (err, ret) => {
+      if (err) return res.json($.utils.npmError(err.message));
+      req.npmUser = ret.name;
+      next();
+    });
   }
   $.data.set('middleware.auth', checkUserAuthorization);
 

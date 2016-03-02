@@ -1,4 +1,4 @@
-
+return;
 $.method('user.create').call({
   name: 'test2',
   password: '123',
