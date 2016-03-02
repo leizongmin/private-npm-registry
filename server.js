@@ -15,6 +15,8 @@ $.config.load('./config');
 
 $.init.load(path.resolve(__dirname, './init/logger.js'));
 
+$.init.load(path.resolve(__dirname, './methods'));
+
 $.init.load(path.resolve(__dirname, './init/express.js'));
 $.init.load(path.resolve(__dirname, './routes'));
 

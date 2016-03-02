@@ -42,8 +42,14 @@ module.exports = function (done) {
       req.method, req.url, req.headers['npm-session'], req.headers['user-agent'], req.headers['version']);
     next();
   });
+
+  // router /
+  const lastRouter = express.Router();
+  $.data.set('router.last', lastRouter);
+
   app.use('/-', dashRouter);
   app.use('/', rootRouter);
+  app.use('/', lastRouter);
 
   app.listen($.config.get('web.port'), err => {
     if (!err) {
