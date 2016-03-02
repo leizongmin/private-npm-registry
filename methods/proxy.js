@@ -8,8 +8,8 @@
 
 module.exports = function (done) {
 
-  const httpProxy = require('http-proxy');
   const request = require('request');
+  const debug = $.utils.debug('method.proxy');
 
   function proxyPass(target, req, res, callback) {
     const options = {
@@ -17,7 +17,10 @@ module.exports = function (done) {
       url: target + req.url,
       headers: req.headers,
     };
+    delete options.headers.host;
+    debug('proxyPass: options=%j', options);
     const proxyReq = request(options, (err, proxyRes, body) => {
+      debug('proxyPass callback: err=%s, status=%s, body=%s', err, res && res.statusCode, body && body.length);
       if (!err) {
         res.statusCode = proxyRes.statusCode;
         res.headers = proxyRes.headers;
@@ -26,19 +29,19 @@ module.exports = function (done) {
     });
     req.pipe(proxyReq);
   }
-  $.method('proxy.pass').register(function (params, callback) {
+
+  $.method('proxy.modify').register(function (params, callback) {
+    debug('proxy.modify: %s %s', params.req.method, params.req.url);
     proxyPass(params.target || $.config.get('npm.url'), params.req, params.res, (err, proxyRes, body) => {
       callback(err, {res: proxyRes, body: body});
     });
   });
 
-  const upstreamProxy = httpProxy.createProxyServer({
-    target: $.config.get('npm.url'),
-  });
-  $.method('proxy.upstream').register(function (params, callback) {
-    upstreamProxy.web(params.req, params.res, {target: params.target || $.config.get('npm.url')});
-    params.res.once('end', () => {
-      callback(null);
+  $.method('proxy.pipe').register(function (params, callback) {
+    debug('proxy.pipe: %s %s', params.req.method, params.req.url);
+    proxyPass(params.target || $.config.get('npm.url'), params.req, params.res, (err, proxyRes, body) => {
+      params.res.end(body);
+      callback(err, {res: proxyRes, body: body});
     });
   });
 

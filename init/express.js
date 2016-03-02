@@ -38,8 +38,7 @@ module.exports = function (done) {
   $.data.set('router.root', rootRouter);
 
   app.use((req, res, next) => {
-    $.logger.log('%s %s [session=%s, agent=%s, version=%s]',
-      req.method, req.url, req.headers['npm-session'], req.headers['user-agent'], req.headers['version']);
+    $.logger.log('%s %s [session=%s, agent=%s, version=%s]', req.method, req.url, req.headers['npm-session'], req.headers['user-agent'], req.headers['version']);
     next();
   });
 
