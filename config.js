@@ -2,6 +2,8 @@ module.exports = function (set, get, has) {
 
   set('web.port', 5000);
 
+  set('db.mongodb', 'mongodb://localhost/npm_registry');
+
   set('npm.host', 'registry.npmjs.com');
   set('npm.url', 'http://registry.npmjs.org');
   set('npm.cdn', 'http://registry.cnpmjs.org');
