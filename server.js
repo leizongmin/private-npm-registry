@@ -14,10 +14,16 @@ global.$ = $;
 $.config.load('./config');
 
 $.init.load(path.resolve(__dirname, './init/logger.js'));
+$.init.load(path.resolve(__dirname, './init/utils.js'));
 
 $.init.load(path.resolve(__dirname, './methods'));
 
 $.init.load(path.resolve(__dirname, './init/express.js'));
 $.init.load(path.resolve(__dirname, './routes'));
 
-$.init()
+$.init(err => {
+  if (err) {
+    ($.logger || console).error('init server fail: %s', err.stack || err);
+    process.exit();
+  }
+});

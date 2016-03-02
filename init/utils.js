@@ -20,6 +20,13 @@ module.exports = function (done) {
     return createDebug('server:' + name);
   };
 
+  $.utils.npmError = function (reason, type, data) {
+    data = data || {};
+    data.reason = reason.toString();
+    data.error = type || 'error';
+    return data;
+  };
+
   done();
 
 };
