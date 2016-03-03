@@ -21,6 +21,17 @@ module.exports = function (done) {
       return url.replace(npmUrl, npmCdn);
     };
 
+    rootRouter.put('/@:package', $.data.get('middleware.auth'), $.data.get('middleware.body'), function (req, res, next) {
+      const s = req.params.package.split('/');
+      const scope = s[0];
+      const packageName = s[1];
+      $.logger.log('publish: %s', req.params.package);
+      $.method('registry.publish').call({user: req.npmUser, data: req.body}, (err, ret) => {
+        if (err) return res.json($.utils.npmError(err.message));
+        res.json({ok: true});
+      });
+    });
+
     rootRouter.get('/:package', function (req, res, next) {
       $.method('proxy.modify').call({req: req, res: res}, (err, params) => {
         if (err) return res.json($.utils.npmError(err.message));
