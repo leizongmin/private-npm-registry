@@ -16,11 +16,11 @@ module.exports = function (done) {
   // response error: {"error": "conflict","reason": "User ucdok already exists."}
   dashRouter.put('/user/org.couchdb.user*', $.data.get('middleware.body'), (req, res, next) => {
     $.logger.log('user login: %s', req.body.name);
-    $.method('user.get').call({ name: req.body.name }, (err, user) => {
+    $.service.call('user.get', { name: req.body.name }, (err, user) => {
       if (err) return res.json($.utils.npmError(err.message));
 
       function responseOK(user) {
-        $.method('user.generateLoginToken').call({
+        $.service.call('user.generateLoginToken', {
           name: user.name,
           maxAge: $.config.get('npm.login.maxAge'),
         }, (err, token) => {
@@ -41,7 +41,7 @@ module.exports = function (done) {
       } else {
 
         // sign up
-        $.method('user.create').call(req.body, (err, newUser) => {
+        $.service.call('user.create', req.body, (err, newUser) => {
           if (err) return res.json($.utils.npmError(err.message));
           responseOK(newUser);
         });

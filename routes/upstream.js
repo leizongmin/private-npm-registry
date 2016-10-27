@@ -11,7 +11,7 @@ module.exports = function (done) {
   const lastRouter = $.data.get('router.last');
 
   lastRouter.get('*', function (req, res, next) {
-    $.method('proxy.pipe').call({ req, res }, $.utils.noopCallback);
+    $.service.call('proxy.pipe', { req, res }, $.utils.noopCallback);
   });
 
   done();

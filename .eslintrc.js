@@ -3,5 +3,6 @@ module.exports = {
   extends: 'lei',
   globals: {
     $: false,
+    co: false,
   },
 };

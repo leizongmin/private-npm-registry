@@ -32,22 +32,22 @@ module.exports = function (done) {
 
   // params = {req, res, target}
   // result = {res, body}
-  $.method('proxy.modify').register(function (params, callback) {
-    debug('proxy.modify: %s %s', params.req.method, params.req.url);
+  $.utils.proxyModify = function (params, callback) {
+    debug('proxyModify: %s %s', params.req.method, params.req.url);
     proxyPass(params.target || $.config.get('npm.url'), params.req, params.res, (err, proxyRes, body) => {
       callback(err, { res: proxyRes, body });
     });
-  });
+  };
 
   // params = {req, res, target}
   // result = {res, body}
-  $.method('proxy.pipe').register(function (params, callback) {
-    debug('proxy.pipe: %s %s', params.req.method, params.req.url);
+  $.utils.proxyPipe = function (params, callback) {
+    debug('proxyPipe: %s %s', params.req.method, params.req.url);
     proxyPass(params.target || $.config.get('npm.url'), params.req, params.res, (err, proxyRes, body) => {
       params.res.end(body);
       callback(err, { res: proxyRes, body });
     });
-  });
+  };
 
   done();
 

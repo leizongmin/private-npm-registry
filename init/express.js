@@ -18,7 +18,7 @@ module.exports = function (done) {
   function checkUserAuthorization(req, res, next) {
     if (!req.headers.authorization) return res.json($.utils.npmError('please login'));
     const token = req.headers.authorization.replace(/^Bearer /i, '');
-    $.method('user.decryptLoginToken').call({ token }, (err, ret) => {
+    $.service.call('user.decryptLoginToken', { token }, (err, ret) => {
       if (err) return res.json($.utils.npmError(err.message));
       req.npmUser = ret.name;
       next();
