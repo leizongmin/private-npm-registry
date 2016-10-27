@@ -32,17 +32,17 @@ module.exports = function (done) {
       });
     });
 
-    rootRouter.get('/:package', function (req, res, next) {
-      $.utils.proxyModify({ req, res }, (err, params) => {
-        if (err) return res.json($.utils.npmError(err.message));
-        if (params.res.statusCode !== 200) return res.end(params.body);
+    rootRouter.get('/:package', co.wrap(function* (req, res, next) {
+      try {
+        const ret = yield $.utils.proxyModify({ req, res });
+        if (ret.res.statusCode !== 200) return res.end(ret.body);
 
         let data;
         try {
-          data = JSON.parse(params.body.toString());
+          data = JSON.parse(ret.body.toString());
         } catch (err) {
-          $.logger.warn('parse JSON error: [%s] %s', err, params.body);
-          return res.end(params.body);
+          $.logger.warn('parse JSON error: [%s] %s', err, ret.body);
+          return res.end(ret.body);
         }
         if (data.versions) {
           for (const v in data.versions) {
@@ -52,8 +52,10 @@ module.exports = function (done) {
           }
         }
         res.json(data);
-      });
-    });
+      } catch (err) {
+        res.json($.utils.npmError(err.message))
+      }
+    }));
 
   }
 
