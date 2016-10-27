@@ -21,7 +21,7 @@ module.exports = function (done) {
       return url.replace(npmUrl, npmCdn);
     };
 
-    rootRouter.put('/@:package', $.data.get('middleware.auth'), $.data.get('middleware.body'), function (req, res, next) {
+    rootRouter.put('/@:package', $.data.get('middleware.auth'), function (req, res, next) {
       const s = req.params.package.split('/');
       const scope = s[0];
       const packageName = s[1];

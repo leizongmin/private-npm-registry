@@ -11,13 +11,16 @@ const ProjectCore = require('project-core');
 const nanoservices = require('nanoservices');
 const coroutine = require('lei-coroutine');
 const createNamespace = require('lei-ns').create;
+const mongoose = require('mongoose');
+mongoose.Promise = Promise;
 
 global.co = coroutine;
 
 const $ = new ProjectCore();
 global.$ = $;
-$.service = new nanoservices.Manager();
 $.data = createNamespace();
+
+$.service = new nanoservices.Manager();
 
 $.config.load('./config');
 
@@ -37,5 +40,8 @@ $.init(err => {
     ($.logger || console).error('init server fail: %s', err.stack || err);
     process.exit();
   }
+  $.service.setOption('logRecorder', new nanoservices.LoggerRecorder($.logger, {
+    format: '$isotime\t$type\t$id\t$service\t$uptime\t$content',
+  }));
   require('./test');
 });

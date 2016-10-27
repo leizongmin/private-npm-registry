@@ -12,8 +12,7 @@ module.exports = function (done) {
   const bodyParser = require('body-parser');
 
   const app = express();
-
-  $.data.set('middleware.body', bodyParser.json());
+  app.use(bodyParser.json());
 
   function checkUserAuthorization(req, res, next) {
     if (!req.headers.authorization) return res.json($.utils.npmError('please login'));
@@ -27,11 +26,11 @@ module.exports = function (done) {
   $.data.set('middleware.auth', checkUserAuthorization);
 
   // router /-/
-  const dashRouter = express.Router();
+  const dashRouter = new express.Router();
   $.data.set('router.dash', dashRouter);
 
   // router /
-  const rootRouter = express.Router();
+  const rootRouter = new express.Router();
   $.data.set('router.root', rootRouter);
 
   app.use((req, res, next) => {
@@ -40,7 +39,7 @@ module.exports = function (done) {
   });
 
   // router /
-  const lastRouter = express.Router();
+  const lastRouter = new express.Router();
   $.data.set('router.last', lastRouter);
 
   app.use('/-', dashRouter);

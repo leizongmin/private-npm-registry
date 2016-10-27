@@ -27,7 +27,7 @@ module.exports = function (done) {
   // result = user
   $.service.register('user.get', co.wrap(function* (ctx) {
     if (!ctx.params.name) return ctx.error($.utils.missingParameterError('name'));
-    return yield $.model.User.findOne({ name: ctx.params.name });
+    ctx.result(yield $.model.User.findOne({ name: ctx.params.name }));
   }));
 
   // params = {name, maxAge}
