@@ -16,7 +16,11 @@
     "super-cache": "^0.0.13",
     "tracer": "^0.8.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^3.8.1",
+    "eslint-config-lei": "0.0.14",
+    "eslint-plugin-promise": "^3.3.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",

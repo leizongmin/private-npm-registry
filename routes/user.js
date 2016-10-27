@@ -16,7 +16,7 @@ module.exports = function (done) {
   // response error: {"error": "conflict","reason": "User ucdok already exists."}
   dashRouter.put('/user/org.couchdb.user*', $.data.get('middleware.body'), (req, res, next) => {
     $.logger.log('user login: %s', req.body.name);
-    $.method('user.get').call({name: req.body.name}, (err, user) => {
+    $.method('user.get').call({ name: req.body.name }, (err, user) => {
       if (err) return res.json($.utils.npmError(err.message));
 
       function responseOK(user) {
@@ -26,7 +26,7 @@ module.exports = function (done) {
         }, (err, token) => {
           if (err) return res.json($.utils.npmError(err.message));
           res.statusCode = 201;
-          res.json({ok: true, id: `org.couchdb.user:${user.name}`, token: token});
+          res.json({ ok: true, id: `org.couchdb.user:${ user.name }`, token });
         });
       }
 
@@ -34,7 +34,7 @@ module.exports = function (done) {
 
         // login
         if (!$.utils.validatePassword(req.body.password, user.password)) {
-          return res.json($.utils.npmError(`invalid password for user "${user.name}"`));
+          return res.json($.utils.npmError(`invalid password for user "${ user.name }"`));
         }
         responseOK(user);
 
@@ -52,7 +52,7 @@ module.exports = function (done) {
   });
 
   dashRouter.get('/user/name', $.data.get('middleware.auth'), function (req, res, next) {
-    res.json({name: req.npmUser});
+    res.json({ name: req.npmUser });
   });
 
   done();

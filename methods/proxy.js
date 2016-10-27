@@ -35,7 +35,7 @@ module.exports = function (done) {
   $.method('proxy.modify').register(function (params, callback) {
     debug('proxy.modify: %s %s', params.req.method, params.req.url);
     proxyPass(params.target || $.config.get('npm.url'), params.req, params.res, (err, proxyRes, body) => {
-      callback(err, {res: proxyRes, body: body});
+      callback(err, { res: proxyRes, body });
     });
   });
 
@@ -45,7 +45,7 @@ module.exports = function (done) {
     debug('proxy.pipe: %s %s', params.req.method, params.req.url);
     proxyPass(params.target || $.config.get('npm.url'), params.req, params.res, (err, proxyRes, body) => {
       params.res.end(body);
-      callback(err, {res: proxyRes, body: body});
+      callback(err, { res: proxyRes, body });
     });
   });
 

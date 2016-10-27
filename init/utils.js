@@ -10,9 +10,9 @@ module.exports = function (done) {
 
   const createDebug = require('debug');
 
-  $.utils.MissingParameterError = $.utils.customError('missingParameterError', {code: 'missing_parameter'});
+  $.utils.MissingParameterError = $.utils.customError('missingParameterError', { code: 'missing_parameter' });
   $.utils.missingParameterError = function (name) {
-    return new $.utils.MissingParameterError(`missing parameter "${name}"`, {name: name});
+    return new $.utils.MissingParameterError(`missing parameter "${ name }"`, { name });
   };
 
   $.utils.noopCallback = function (err) {

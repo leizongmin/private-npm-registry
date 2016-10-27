@@ -17,7 +17,7 @@ module.exports = function (done) {
     if (!params.password) return callback($.utils.missingParameterError('password'));
     if (!params.email) return callback($.utils.missingParameterError('email'));
 
-    const item = new $.model.User({name: params.name, email: params.email});
+    const item = new $.model.User({ name: params.name, email: params.email });
     item.password = $.utils.encryptPassword(params.password);
     item.save(callback);
   });
@@ -26,7 +26,7 @@ module.exports = function (done) {
   // result = user
   $.method('user.get').register(function (params, callback) {
     if (!params.name) return callback($.utils.missingParameterError('name'));
-    $.model.User.findOne({name: params.name}, callback);
+    $.model.User.findOne({ name: params.name }, callback);
   });
 
   // params = {name, maxAge}
@@ -35,10 +35,10 @@ module.exports = function (done) {
     if (!params.name) return callback($.utils.missingParameterError('name'));
     if (!params.maxAge) return callback($.utils.missingParameterError('maxAge'));
 
-    const expire =  (parseInt(Date.now() / 1000, 10) + params.maxAge).toString(32);
+    const expire = (parseInt(Date.now() / 1000, 10) + params.maxAge).toString(32);
     const str = $.utils.randomString(6);
-    const token = $.utils.encryptData([expire, str, params.name].join(' '), $.config.get('web.secret'));
-    callback(null, `${str}-${token}`);
+    const token = $.utils.encryptData([ expire, str, params.name ].join(' '), $.config.get('web.secret'));
+    callback(null, `${ str }-${ token }`);
   });
 
   // params = {token}
@@ -60,7 +60,7 @@ module.exports = function (done) {
     if (str2 !== str) return callback(new Error('invalid login token'));
     if (expire * 1000 < Date.now()) return callback(new Error('login token expired'));
 
-    callback(null, {expire: expire, name: name});
+    callback(null, { expire, name });
   });
 
   done();

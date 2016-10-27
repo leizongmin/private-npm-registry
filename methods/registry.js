@@ -13,8 +13,8 @@ module.exports = function (done) {
   // params = {user, data}
   // result = data
   $.method('registry.publish').check({
-    user: {required: true, validate: (v) => v && v.length > 0},
-    data: {required: true, validate: (v) => v.name && v._attachments},
+    user: { required: true, validate: (v) => v && v.length > 0 },
+    data: { required: true, validate: (v) => v.name && v._attachments },
   });
   $.method('registry.publish').register(function (params, callback) {
     const item = new $.model.Registry(params.data);

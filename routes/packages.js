@@ -26,14 +26,14 @@ module.exports = function (done) {
       const scope = s[0];
       const packageName = s[1];
       $.logger.log('publish: %s', req.params.package);
-      $.method('registry.publish').call({user: req.npmUser, data: req.body}, (err, ret) => {
+      $.method('registry.publish').call({ user: req.npmUser, data: req.body }, (err, ret) => {
         if (err) return res.json($.utils.npmError(err.message));
-        res.json({ok: true});
+        res.json({ ok: true });
       });
     });
 
     rootRouter.get('/:package', function (req, res, next) {
-      $.method('proxy.modify').call({req: req, res: res}, (err, params) => {
+      $.method('proxy.modify').call({ req, res }, (err, params) => {
         if (err) return res.json($.utils.npmError(err.message));
         if (params.res.statusCode !== 200) return res.end(params.body);
 
