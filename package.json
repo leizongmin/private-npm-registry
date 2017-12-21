@@ -6,9 +6,9 @@
   "dependencies": {
     "async": "^2.1.2",
     "body-parser": "^1.15.0",
-    "debug": "^2.2.0",
+    "debug": "^3.1.0",
     "express": "^4.13.4",
-    "fs-extra": "^0.30.0",
+    "fs-extra": "^5.0.0",
     "lei-coroutine": "^1.3.1",
     "lei-ns": "^0.4.1",
     "lei-utils": "^3.0.1",
@@ -16,12 +16,12 @@
     "nanoservices": "0.0.11",
     "project-core": "^2.0.1",
     "request": "^2.69.0",
-    "super-cache": "0.0.15",
+    "super-cache": "1.0.0",
     "tracer": "^0.8.3"
   },
   "devDependencies": {
-    "eslint": "^3.8.1",
-    "eslint-config-lei": "0.0.14",
+    "eslint": "^4.13.1",
+    "eslint-config-lei": "0.0.16",
     "eslint-plugin-promise": "^3.3.0"
   },
   "scripts": {
