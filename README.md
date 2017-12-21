@@ -1,4 +1,6 @@
 # private-npm-registry
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/leizongmin/private-npm-registry.svg)](https://greenkeeper.io/)
 simple private NPM registry server
 
 ## Installation
